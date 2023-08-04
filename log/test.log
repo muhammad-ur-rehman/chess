@@ -1167,3 +1167,963 @@ PawnTest: test_should_be_valid_with_valid_attributes
 PawnTest: test_should_be_invalid_with_invalid_x_value
 -----------------------------------------------------
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "pawns" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "ar_internal_metadata" DISABLE TRIGGER ALL[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.6ms)[0m  [1m[31mDELETE FROM "pawns";
+INSERT INTO "pawns" ("id", "x", "y", "face", "color", "created_at", "updated_at") VALUES (200, 1, 1, 'EAST', 'WHITE', '2023-08-04 07:00:14.344299', '2023-08-04 07:00:14.344299'), (201, 0, 0, 'NORTH', 'BLACK', '2023-08-04 07:00:14.344299', '2023-08-04 07:00:14.344299')[0m
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mALTER TABLE "pawns" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "ar_internal_metadata" ENABLE TRIGGER ALL[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.4ms)[0m  [1m[35mdo $$
+  declare r record;
+BEGIN
+FOR r IN (
+  SELECT FORMAT(
+    'UPDATE pg_constraint SET convalidated=false WHERE conname = ''%I'' AND connamespace::regnamespace = ''%I''::regnamespace; ALTER TABLE %I.%I VALIDATE CONSTRAINT %I;',
+    constraint_name,
+    table_schema,
+    table_schema,
+    table_name,
+    constraint_name
+  ) AS constraint_check
+  FROM information_schema.table_constraints WHERE constraint_type = 'FOREIGN KEY'
+)
+  LOOP
+    EXECUTE (r.constraint_check);
+  END LOOP;
+END;
+$$;
+[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+--------------------------------
+PawnTest: test_Showing_pawn_face
+--------------------------------
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:00:15 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:16 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:16 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:00:16 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.6ms | Allocations: 690)
+  Rendered pawns/_command_form.html.erb (Duration: 1.2ms | Allocations: 898)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 5.3ms | Allocations: 3376)
+  Rendered layouts/_flash.html.erb (Duration: 0.5ms | Allocations: 226)
+  Rendered layout layouts/application.html.erb (Duration: 181.2ms | Allocations: 75905)
+Completed 200 OK in 195ms (Views: 184.5ms | ActiveRecord: 0.0ms | Allocations: 85599)
+Started GET "/assets/application-50d943b05f51ff35937f569e67bb41b013d8f148b361e231068460b6f4c6b44a.css" for 127.0.0.1 at 2023-08-04 12:00:16 +0500
+Started GET "/assets/application-df693fa9bf0f2e1b560e900d925434a7ed336e7e18e3dbe8a66cf81e0d8ca961.js" for 127.0.0.1 at 2023-08-04 12:00:16 +0500
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:00:16 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:16 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:16 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+--------------------------------------------
+PawnTest: test_shows_notification_on_command
+--------------------------------------------
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:00:16 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:16 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:16 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:00:16 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 190)
+  Rendered pawns/_command_form.html.erb (Duration: 0.3ms | Allocations: 270)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.6ms | Allocations: 628)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered layout layouts/application.html.erb (Duration: 1.4ms | Allocations: 1583)
+Completed 200 OK in 2ms (Views: 1.6ms | ActiveRecord: 0.0ms | Allocations: 2169)
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:00:16 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:16 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+Started PATCH "/chess/board/201/process-command" for 127.0.0.1 at 2023-08-04 12:00:16 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"command"=>"LEFT", "commit"=>"Submit", "id"=>"201"}
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+[31mUnpermitted parameters: :_method, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x000000013a1f3b60>, params: {"_method"=>"patch", "command"=>"LEFT", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"201"} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPawn Update (0.5ms)[0m  [1m[33mUPDATE "pawns" SET "face" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["face", "WEST"], ["updated_at", "2023-08-04 07:00:16.690859"], ["id", 201]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.2ms | Allocations: 199)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 2.9ms | Allocations: 1387)
+Completed 200 OK in 9ms (Views: 4.5ms | ActiveRecord: 1.0ms | Allocations: 4700)
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:16 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+----------------------------------------------
+PawnTest: test_Error_shows_after_wrong_command
+----------------------------------------------
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:00:16 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:17 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:17 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:00:17 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 190)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 269)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.5ms | Allocations: 627)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered layout layouts/application.html.erb (Duration: 0.8ms | Allocations: 1579)
+Completed 200 OK in 2ms (Views: 0.9ms | ActiveRecord: 0.0ms | Allocations: 2138)
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:00:17 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:17 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+Started PATCH "/chess/board/201/process-command" for 127.0.0.1 at 2023-08-04 12:00:17 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"command"=>"RIGHTII", "commit"=>"Submit", "id"=>"201"}
+  [1m[36mPawn Load (0.4ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+[31mUnpermitted parameters: :_method, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x000000013c4fb860>, params: {"_method"=>"patch", "command"=>"RIGHTII", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"201"} }[0m
+Redirected to http://127.0.0.1:62687/
+Completed 302 Found in 1ms (ActiveRecord: 0.4ms | Allocations: 710)
+Started GET "/" for 127.0.0.1 at 2023-08-04 12:00:17 +0500
+Processing by PawnsController#chess_board as TURBO_STREAM
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 190)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 269)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.5ms | Allocations: 677)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 22)
+  Rendered layout layouts/application.html.erb (Duration: 0.8ms | Allocations: 1633)
+Completed 200 OK in 1ms (Views: 1.0ms | ActiveRecord: 0.0ms | Allocations: 2268)
+Unsubscribing from channel: {"channel":"Turbo::StreamsChannel","signed_stream_name":"IloybGtPaTh2WTJobGMzTXRZbTloY21RdlVHRjNiaTh5TURFIg==--7cb5340c691a723799fd64081e3547b52745e977e093a941b68c9e44f68c4251"}
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:17 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+-------------------------------------------------------
+PawnTest: test_There_is_no_Command_Allowed_before_Place
+-------------------------------------------------------
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:00:17 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:17 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:17 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:00:17 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 1691132417], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPawn Create (0.2ms)[0m  [1m[32mINSERT INTO "pawns" ("id", "x", "y", "face", "color", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["id", 1691132417], ["x", nil], ["y", nil], ["face", nil], ["color", nil], ["created_at", "2023-08-04 07:00:17.417101"], ["updated_at", "2023-08-04 07:00:17.417101"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 187)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 270)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.5ms | Allocations: 633)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered layout layouts/application.html.erb (Duration: 0.8ms | Allocations: 1585)
+Completed 200 OK in 3ms (Views: 1.0ms | ActiveRecord: 0.6ms | Allocations: 2719)
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:00:17 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:17 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8xNjkxMTMyNDE3
+Started PATCH "/chess/board/1691132417/process-command" for 127.0.0.1 at 2023-08-04 12:00:17 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"command"=>"MOVE", "commit"=>"Submit", "id"=>"1691132417"}
+  [1m[36mPawn Load (0.4ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 1691132417], ["LIMIT", 1]]
+[31mUnpermitted parameters: :_method, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x000000013a3cadd0>, params: {"_method"=>"patch", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"1691132417"} }[0m
+Redirected to http://127.0.0.1:62687/
+Completed 302 Found in 1ms (ActiveRecord: 0.4ms | Allocations: 1095)
+Started GET "/" for 127.0.0.1 at 2023-08-04 12:00:17 +0500
+Processing by PawnsController#chess_board as TURBO_STREAM
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 1691132417], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 182)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 269)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.5ms | Allocations: 622)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 21)
+  Rendered layout layouts/application.html.erb (Duration: 0.8ms | Allocations: 1577)
+Completed 200 OK in 2ms (Views: 1.0ms | ActiveRecord: 0.1ms | Allocations: 2214)
+Unsubscribing from channel: {"channel":"Turbo::StreamsChannel","signed_stream_name":"IloybGtPaTh2WTJobGMzTXRZbTloY21RdlVHRjNiaTh4TmpreE1UTXlOREUzIg==--ed4620855886b8ee960bafcdf583d0d82dc416dbfc02e4fada7c88f528258b2a"}
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8xNjkxMTMyNDE3
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8xNjkxMTMyNDE3
+Started PATCH "/chess/board/1691132417/process-command" for 127.0.0.1 at 2023-08-04 12:00:22 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"command"=>"PLACE 0,0,NORTH,WHITE", "commit"=>"Submit", "id"=>"1691132417"}
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 1691132417], ["LIMIT", 1]]
+[31mUnpermitted parameters: :_method, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x000000012aca1180>, params: {"_method"=>"patch", "command"=>"PLACE 0,0,NORTH,WHITE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"1691132417"} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPawn Update (0.4ms)[0m  [1m[33mUPDATE "pawns" SET "x" = $1, "y" = $2, "face" = $3, "color" = $4, "updated_at" = $5 WHERE "pawns"."id" = $6[0m  [["x", 0], ["y", 0], ["face", "NORTH"], ["color", "WHITE"], ["updated_at", "2023-08-04 07:00:22.621919"], ["id", 1691132417]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.2ms | Allocations: 199)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 0.3ms | Allocations: 475)
+Completed 200 OK in 2ms (Views: 0.5ms | ActiveRecord: 0.5ms | Allocations: 1590)
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:22 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8xNjkxMTMyNDE3
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+-------------------------------------------
+PawnTest: test_There_is_no_Pawn_on_new_game
+-------------------------------------------
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:00:22 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:22 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:22 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:00:22 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mPawn Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 64], ["LIMIT", 1]]
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 64], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPawn Create (0.2ms)[0m  [1m[32mINSERT INTO "pawns" ("id", "x", "y", "face", "color", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["id", 64], ["x", nil], ["y", nil], ["face", nil], ["color", nil], ["created_at", "2023-08-04 07:00:22.916541"], ["updated_at", "2023-08-04 07:00:22.916541"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 187)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 270)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.5ms | Allocations: 633)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered layout layouts/application.html.erb (Duration: 0.8ms | Allocations: 1585)
+Completed 200 OK in 3ms (Views: 1.0ms | ActiveRecord: 0.7ms | Allocations: 2983)
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:00:22 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:22 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi82NA
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:22 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi82NA
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+---------------------------------------------------
+PawnTest: test_direction_changes_after_LEFT_command
+---------------------------------------------------
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:00:23 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:23 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:23 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:00:23 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 190)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 269)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.5ms | Allocations: 627)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered layout layouts/application.html.erb (Duration: 0.9ms | Allocations: 1579)
+Completed 200 OK in 2ms (Views: 1.1ms | ActiveRecord: 0.0ms | Allocations: 2152)
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:00:23 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:23 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+Started PATCH "/chess/board/201/process-command" for 127.0.0.1 at 2023-08-04 12:00:23 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"command"=>"LEFT", "commit"=>"Submit", "id"=>"201"}
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+[31mUnpermitted parameters: :_method, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x000000012af3cb10>, params: {"_method"=>"patch", "command"=>"LEFT", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"201"} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPawn Update (0.2ms)[0m  [1m[33mUPDATE "pawns" SET "face" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["face", "WEST"], ["updated_at", "2023-08-04 07:00:23.288354"], ["id", 201]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 199)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 0.3ms | Allocations: 475)
+Completed 200 OK in 2ms (Views: 0.4ms | ActiveRecord: 0.5ms | Allocations: 1750)
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:24 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+-------------------------------------------------------
+PawnTest: test_Pawn_position_changes_after_MOVE_command
+-------------------------------------------------------
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+  [1m[36mPawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 200], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:00:24 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:24 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:24 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:00:24 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 200], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.2ms | Allocations: 190)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 269)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.6ms | Allocations: 627)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered layout layouts/application.html.erb (Duration: 1.0ms | Allocations: 1580)
+Completed 200 OK in 2ms (Views: 1.2ms | ActiveRecord: 0.0ms | Allocations: 2171)
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:00:24 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:24 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDA
+Started PATCH "/chess/board/200/process-command" for 127.0.0.1 at 2023-08-04 12:00:24 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"command"=>"MOVE", "commit"=>"Submit", "id"=>"200"}
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 200], ["LIMIT", 1]]
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 200], ["LIMIT", 1]]
+  [1m[36mPawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 200], ["LIMIT", 1]]
+[31mUnpermitted parameters: :_method, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x00000001078e9da8>, params: {"_method"=>"patch", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"200"} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPawn Update (0.2ms)[0m  [1m[33mUPDATE "pawns" SET "x" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["x", 2], ["updated_at", "2023-08-04 07:00:24.673682"], ["id", 200]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 199)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 0.3ms | Allocations: 475)
+Completed 200 OK in 2ms (Views: 0.5ms | ActiveRecord: 0.3ms | Allocations: 1869)
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 200], ["LIMIT", 1]]
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 200], ["LIMIT", 1]]
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:24 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDA
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+---------------------------------
+PawnTest: test_Showing_game_right
+---------------------------------
+  [1m[36mPawn Load (0.4ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:00:24 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:24 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:24 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 190)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 269)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.5ms | Allocations: 627)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered layout layouts/application.html.erb (Duration: 0.8ms | Allocations: 1579)
+Completed 200 OK in 2ms (Views: 1.0ms | ActiveRecord: 0.0ms | Allocations: 2144)
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+-------------------------------------------------------------
+PawnTest: test_Report_shown_in_notification_on_command_REPORT
+-------------------------------------------------------------
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 190)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 269)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.5ms | Allocations: 627)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered layout layouts/application.html.erb (Duration: 0.9ms | Allocations: 1579)
+Completed 200 OK in 2ms (Views: 1.0ms | ActiveRecord: 0.0ms | Allocations: 2150)
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+Started PATCH "/chess/board/201/process-command" for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"command"=>"REPORT", "commit"=>"Submit", "id"=>"201"}
+  [1m[36mPawn Load (0.4ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+[31mUnpermitted parameters: :_method, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x0000000107ab4480>, params: {"_method"=>"patch", "command"=>"REPORT", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"201"} }[0m
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 189)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 12)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 0.3ms | Allocations: 466)
+Completed 200 OK in 2ms (Views: 0.5ms | ActiveRecord: 0.4ms | Allocations: 1804)
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+--------------------------------------
+PawnTest: test_Submitting_MOVE_command
+--------------------------------------
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 190)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 269)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.5ms | Allocations: 627)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered layout layouts/application.html.erb (Duration: 1.0ms | Allocations: 1579)
+Completed 200 OK in 2ms (Views: 1.3ms | ActiveRecord: 0.0ms | Allocations: 2148)
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+Started PATCH "/chess/board/201/process-command" for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"command"=>"MOVE", "commit"=>"Submit", "id"=>"201"}
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+[31mUnpermitted parameters: :_method, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x000000011a3ec090>, params: {"_method"=>"patch", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"201"} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPawn Update (0.2ms)[0m  [1m[33mUPDATE "pawns" SET "y" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["y", 1], ["updated_at", "2023-08-04 07:00:25.748502"], ["id", 201]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 199)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 0.3ms | Allocations: 475)
+Completed 200 OK in 2ms (Views: 0.5ms | ActiveRecord: 0.7ms | Allocations: 2346)
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:00:25 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "pawns" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "ar_internal_metadata" DISABLE TRIGGER ALL[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.8ms)[0m  [1m[31mDELETE FROM "pawns";
+INSERT INTO "pawns" ("id", "x", "y", "face", "color", "created_at", "updated_at") VALUES (200, 1, 1, 'EAST', 'WHITE', '2023-08-04 07:06:13.575702', '2023-08-04 07:06:13.575702'), (201, 0, 0, 'NORTH', 'BLACK', '2023-08-04 07:06:13.575702', '2023-08-04 07:06:13.575702')[0m
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "pawns" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "ar_internal_metadata" ENABLE TRIGGER ALL[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (7.9ms)[0m  [1m[35mdo $$
+  declare r record;
+BEGIN
+FOR r IN (
+  SELECT FORMAT(
+    'UPDATE pg_constraint SET convalidated=false WHERE conname = ''%I'' AND connamespace::regnamespace = ''%I''::regnamespace; ALTER TABLE %I.%I VALIDATE CONSTRAINT %I;',
+    constraint_name,
+    table_schema,
+    table_schema,
+    table_name,
+    constraint_name
+  ) AS constraint_check
+  FROM information_schema.table_constraints WHERE constraint_type = 'FOREIGN KEY'
+)
+  LOOP
+    EXECUTE (r.constraint_check);
+  END LOOP;
+END;
+$$;
+[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+----------------------------------------------
+PawnTest: test_Error_shows_after_wrong_command
+----------------------------------------------
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.5ms | Allocations: 692)
+  Rendered pawns/_command_form.html.erb (Duration: 0.9ms | Allocations: 800)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 3.5ms | Allocations: 2878)
+  Rendered layouts/_flash.html.erb (Duration: 0.4ms | Allocations: 228)
+  Rendered layout layouts/application.html.erb (Duration: 137.7ms | Allocations: 33346)
+Completed 200 OK in 146ms (Views: 139.7ms | ActiveRecord: 0.0ms | Allocations: 40276)
+Started GET "/assets/application-50d943b05f51ff35937f569e67bb41b013d8f148b361e231068460b6f4c6b44a.css" for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Started GET "/assets/application-55a093ad46d148497f6d6e257941e4841dd9612e02f59bb41100208c0a55ee94.js" for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+Started PATCH "/chess/board/201/process-command" for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"command"=>"RIGHTII", "commit"=>"Submit", "id"=>"201"}
+  [1m[36mPawn Load (0.4ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+[31mUnpermitted parameters: :_method, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x000000012cf46938>, params: {"_method"=>"patch", "command"=>"RIGHTII", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"201"} }[0m
+Redirected to http://127.0.0.1:62769/
+Completed 302 Found in 2ms (ActiveRecord: 0.4ms | Allocations: 906)
+Started GET "/" for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Processing by PawnsController#chess_board as TURBO_STREAM
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 190)
+  Rendered pawns/_command_form.html.erb (Duration: 0.3ms | Allocations: 270)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.6ms | Allocations: 678)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 22)
+  Rendered layout layouts/application.html.erb (Duration: 1.0ms | Allocations: 1635)
+Completed 200 OK in 2ms (Views: 1.2ms | ActiveRecord: 0.0ms | Allocations: 2277)
+Unsubscribing from channel: {"channel":"Turbo::StreamsChannel","signed_stream_name":"IloybGtPaTh2WTJobGMzTXRZbTloY21RdlVHRjNiaTh5TURFIg==--7cb5340c691a723799fd64081e3547b52745e977e093a941b68c9e44f68c4251"}
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+--------------------------------
+PawnTest: test_Showing_pawn_face
+--------------------------------
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 190)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 269)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.5ms | Allocations: 627)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered layout layouts/application.html.erb (Duration: 0.8ms | Allocations: 1579)
+Completed 200 OK in 2ms (Views: 1.0ms | ActiveRecord: 0.0ms | Allocations: 2159)
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+-------------------------------------------------------
+PawnTest: test_Pawn_position_changes_after_MOVE_command
+-------------------------------------------------------
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 200], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:06:15 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 200], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 190)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 269)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.5ms | Allocations: 627)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered layout layouts/application.html.erb (Duration: 0.8ms | Allocations: 1579)
+Completed 200 OK in 1ms (Views: 1.0ms | ActiveRecord: 0.0ms | Allocations: 2154)
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDA
+Started PATCH "/chess/board/200/process-command" for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"command"=>"MOVE", "commit"=>"Submit", "id"=>"200"}
+  [1m[36mPawn Load (0.7ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 200], ["LIMIT", 1]]
+[31mUnpermitted parameters: :_method, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x000000011d21cd48>, params: {"_method"=>"patch", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"200"} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPawn Update (0.2ms)[0m  [1m[33mUPDATE "pawns" SET "x" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["x", 2], ["updated_at", "2023-08-04 07:06:16.231488"], ["id", 200]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.2ms | Allocations: 199)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 1.3ms | Allocations: 1062)
+Completed 200 OK in 6ms (Views: 2.2ms | ActiveRecord: 1.1ms | Allocations: 2943)
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 200], ["LIMIT", 1]]
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 200], ["LIMIT", 1]]
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDA
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+---------------------------------
+PawnTest: test_Showing_game_right
+---------------------------------
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 190)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 269)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.5ms | Allocations: 627)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered layout layouts/application.html.erb (Duration: 0.8ms | Allocations: 1579)
+Completed 200 OK in 1ms (Views: 1.0ms | ActiveRecord: 0.0ms | Allocations: 2152)
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+--------------------------------------------
+PawnTest: test_shows_notification_on_command
+--------------------------------------------
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 190)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 269)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.6ms | Allocations: 627)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered layout layouts/application.html.erb (Duration: 1.0ms | Allocations: 1579)
+Completed 200 OK in 2ms (Views: 1.2ms | ActiveRecord: 0.0ms | Allocations: 2146)
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+Started PATCH "/chess/board/201/process-command" for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"command"=>"LEFT", "commit"=>"Submit", "id"=>"201"}
+  [1m[36mPawn Load (0.4ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+[31mUnpermitted parameters: :_method, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x000000011a6faf20>, params: {"_method"=>"patch", "command"=>"LEFT", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"201"} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPawn Update (0.2ms)[0m  [1m[33mUPDATE "pawns" SET "face" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["face", "WEST"], ["updated_at", "2023-08-04 07:06:16.838741"], ["id", 201]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 199)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 0.3ms | Allocations: 475)
+Completed 200 OK in 2ms (Views: 0.5ms | ActiveRecord: 0.7ms | Allocations: 2164)
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+-------------------------------------------------------
+PawnTest: test_There_is_no_Command_Allowed_before_Place
+-------------------------------------------------------
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:06:16 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:17 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:17 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:06:17 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 1691132776], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPawn Create (0.2ms)[0m  [1m[32mINSERT INTO "pawns" ("id", "x", "y", "face", "color", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["id", 1691132776], ["x", nil], ["y", nil], ["face", nil], ["color", nil], ["created_at", "2023-08-04 07:06:17.102305"], ["updated_at", "2023-08-04 07:06:17.102305"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.2ms | Allocations: 187)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 271)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.5ms | Allocations: 634)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered layout layouts/application.html.erb (Duration: 0.8ms | Allocations: 1588)
+Completed 200 OK in 3ms (Views: 1.0ms | ActiveRecord: 0.5ms | Allocations: 2702)
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:06:17 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:17 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8xNjkxMTMyNzc2
+Started PATCH "/chess/board/1691132776/process-command" for 127.0.0.1 at 2023-08-04 12:06:17 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"command"=>"MOVE", "commit"=>"Submit", "id"=>"1691132776"}
+  [1m[36mPawn Load (0.4ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 1691132776], ["LIMIT", 1]]
+[31mUnpermitted parameters: :_method, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x000000012c5aec90>, params: {"_method"=>"patch", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"1691132776"} }[0m
+Redirected to http://127.0.0.1:62769/
+Completed 302 Found in 1ms (ActiveRecord: 0.4ms | Allocations: 1093)
+Started GET "/" for 127.0.0.1 at 2023-08-04 12:06:17 +0500
+Processing by PawnsController#chess_board as TURBO_STREAM
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 1691132776], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 182)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 270)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.4ms | Allocations: 623)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 21)
+  Rendered layout layouts/application.html.erb (Duration: 0.9ms | Allocations: 1580)
+Completed 200 OK in 2ms (Views: 1.1ms | ActiveRecord: 0.1ms | Allocations: 2202)
+Unsubscribing from channel: {"channel":"Turbo::StreamsChannel","signed_stream_name":"IloybGtPaTh2WTJobGMzTXRZbTloY21RdlVHRjNiaTh4TmpreE1UTXlOemMyIg==--db2304aeebe4cb499c2b6ad8d265c8d514c22c8d4653d3f3a15adec02b3f169b"}
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8xNjkxMTMyNzc2
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8xNjkxMTMyNzc2
+Started PATCH "/chess/board/1691132776/process-command" for 127.0.0.1 at 2023-08-04 12:06:22 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"command"=>"PLACE 0,0,NORTH,WHITE", "commit"=>"Submit", "id"=>"1691132776"}
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 1691132776], ["LIMIT", 1]]
+[31mUnpermitted parameters: :_method, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x000000012ce14038>, params: {"_method"=>"patch", "command"=>"PLACE 0,0,NORTH,WHITE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"1691132776"} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPawn Update (0.3ms)[0m  [1m[33mUPDATE "pawns" SET "x" = $1, "y" = $2, "face" = $3, "color" = $4, "updated_at" = $5 WHERE "pawns"."id" = $6[0m  [["x", 0], ["y", 0], ["face", "NORTH"], ["color", "WHITE"], ["updated_at", "2023-08-04 07:06:22.344580"], ["id", 1691132776]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 199)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 0.3ms | Allocations: 475)
+Completed 200 OK in 2ms (Views: 0.5ms | ActiveRecord: 0.4ms | Allocations: 1583)
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:22 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8xNjkxMTMyNzc2
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+---------------------------------------------------
+PawnTest: test_direction_changes_after_LEFT_command
+---------------------------------------------------
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:06:22 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:22 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:22 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:06:22 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 190)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 270)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.5ms | Allocations: 628)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered layout layouts/application.html.erb (Duration: 0.9ms | Allocations: 1581)
+Completed 200 OK in 2ms (Views: 1.1ms | ActiveRecord: 0.0ms | Allocations: 2156)
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:06:22 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:22 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+Started PATCH "/chess/board/201/process-command" for 127.0.0.1 at 2023-08-04 12:06:22 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"command"=>"LEFT", "commit"=>"Submit", "id"=>"201"}
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+[31mUnpermitted parameters: :_method, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x000000012d6fbc50>, params: {"_method"=>"patch", "command"=>"LEFT", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"201"} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPawn Update (0.3ms)[0m  [1m[33mUPDATE "pawns" SET "face" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["face", "WEST"], ["updated_at", "2023-08-04 07:06:22.745547"], ["id", 201]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.3ms | Allocations: 199)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 0.5ms | Allocations: 475)
+Completed 200 OK in 3ms (Views: 0.9ms | ActiveRecord: 0.6ms | Allocations: 1752)
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:23 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+--------------------------------------
+PawnTest: test_Submitting_MOVE_command
+--------------------------------------
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:06:23 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:23 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:23 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 190)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 269)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.4ms | Allocations: 627)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered layout layouts/application.html.erb (Duration: 0.8ms | Allocations: 1580)
+Completed 200 OK in 2ms (Views: 1.1ms | ActiveRecord: 0.0ms | Allocations: 2161)
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+Started PATCH "/chess/board/201/process-command" for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"command"=>"MOVE", "commit"=>"Submit", "id"=>"201"}
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+[31mUnpermitted parameters: :_method, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x000000012b9d1c38>, params: {"_method"=>"patch", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"201"} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPawn Update (0.3ms)[0m  [1m[33mUPDATE "pawns" SET "y" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["y", 1], ["updated_at", "2023-08-04 07:06:24.109061"], ["id", 201]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 199)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 0.3ms | Allocations: 475)
+Completed 200 OK in 3ms (Views: 0.5ms | ActiveRecord: 0.7ms | Allocations: 2421)
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+-------------------------------------------
+PawnTest: test_There_is_no_Pawn_on_new_game
+-------------------------------------------
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mPawn Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 95412360], ["LIMIT", 1]]
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 95412360], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPawn Create (0.2ms)[0m  [1m[32mINSERT INTO "pawns" ("id", "x", "y", "face", "color", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["id", 95412360], ["x", nil], ["y", nil], ["face", nil], ["color", nil], ["created_at", "2023-08-04 07:06:24.339758"], ["updated_at", "2023-08-04 07:06:24.339758"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 187)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 270)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.4ms | Allocations: 633)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered layout layouts/application.html.erb (Duration: 0.8ms | Allocations: 1585)
+Completed 200 OK in 3ms (Views: 0.9ms | ActiveRecord: 0.7ms | Allocations: 2968)
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi85NTQxMjM2MA
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi85NTQxMjM2MA
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+-------------------------------------------------------------
+PawnTest: test_Report_shown_in_notification_on_command_REPORT
+-------------------------------------------------------------
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+Started GET "/rack_session/edit" for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Started PUT "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Started GET "/rack_session" for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Started GET "/chess/board" for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mCACHE Pawn Load (0.0ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.2ms | Allocations: 190)
+  Rendered pawns/_command_form.html.erb (Duration: 0.2ms | Allocations: 269)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.6ms | Allocations: 627)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered layout layouts/application.html.erb (Duration: 1.0ms | Allocations: 1579)
+Completed 200 OK in 2ms (Views: 1.3ms | ActiveRecord: 0.0ms | Allocations: 2154)
+Started GET "/cable" for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Started GET "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+Started PATCH "/chess/board/201/process-command" for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"command"=>"REPORT", "commit"=>"Submit", "id"=>"201"}
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 201], ["LIMIT", 1]]
+[31mUnpermitted parameters: :_method, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x000000011a68a680>, params: {"_method"=>"patch", "command"=>"REPORT", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"201"} }[0m
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.1ms | Allocations: 189)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 12)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 0.3ms | Allocations: 466)
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.3ms | Allocations: 1751)
+Finished "/cable" [WebSocket] for 127.0.0.1 at 2023-08-04 12:06:24 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi8yMDE
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "pawns" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "ar_internal_metadata" DISABLE TRIGGER ALL[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.6ms)[0m  [1m[31mDELETE FROM "pawns";
+INSERT INTO "pawns" ("id", "x", "y", "face", "color", "created_at", "updated_at") VALUES (200, 1, 1, 'EAST', 'WHITE', '2023-08-04 07:06:29.856518', '2023-08-04 07:06:29.856518'), (201, 0, 0, 'NORTH', 'BLACK', '2023-08-04 07:06:29.856518', '2023-08-04 07:06:29.856518')[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mALTER TABLE "pawns" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "ar_internal_metadata" ENABLE TRIGGER ALL[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.8ms)[0m  [1m[35mdo $$
+  declare r record;
+BEGIN
+FOR r IN (
+  SELECT FORMAT(
+    'UPDATE pg_constraint SET convalidated=false WHERE conname = ''%I'' AND connamespace::regnamespace = ''%I''::regnamespace; ALTER TABLE %I.%I VALIDATE CONSTRAINT %I;',
+    constraint_name,
+    table_schema,
+    table_schema,
+    table_name,
+    constraint_name
+  ) AS constraint_check
+  FROM information_schema.table_constraints WHERE constraint_type = 'FOREIGN KEY'
+)
+  LOOP
+    EXECUTE (r.constraint_check);
+  END LOOP;
+END;
+$$;
+[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+----------------------------------------------------------------------
+ChessServiceTest: test_place_method_updates_the_position_and_direction
+----------------------------------------------------------------------
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" ORDER BY "pawns"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+-------------------------------------------------------
+ChessServiceTest: test_move_method_updates_the_position
+-------------------------------------------------------
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" ORDER BY "pawns"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+---------------------------------------------------------
+ChessServiceTest: test_right_method_updates_the_direction
+---------------------------------------------------------
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" ORDER BY "pawns"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+--------------------------------------------------------
+ChessServiceTest: test_left_method_updates_the_direction
+--------------------------------------------------------
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" ORDER BY "pawns"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+-----------------------------------------------------
+PawnTest: test_should_be_invalid_with_invalid_x_value
+-----------------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+-----------------------------------------------------
+PawnTest: test_should_be_invalid_with_invalid_y_value
+-----------------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+---------------------------------------------------------
+PawnTest: test_should_be_invalid_with_invalid_color_value
+---------------------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+--------------------------------------------------------
+PawnTest: test_should_be_invalid_with_invalid_face_value
+--------------------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+----------------------------------------------------
+PawnTest: test_should_be_valid_with_valid_attributes
+----------------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+--------------------------------------------------
+PawnTest: test_should_be_valid_with_nil_attributes
+--------------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
