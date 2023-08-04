@@ -1,0 +1,80 @@
+// board.scss
+
+$board-size: 8;
+$cell-size: 65px;
+
+.chess-board {
+  display: inline-grid;
+  grid-template-columns: repeat($board-size, $cell-size);
+  grid-template-rows: repeat($board-size, $cell-size);
+  gap: 1px;
+  border: 1px solid black;
+
+  .cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border: 1px solid black;
+
+    &.empty {
+      .pawn-face {
+        display: none;
+      }
+    }
+  }
+
+  .pawn-face {
+    font-size: var(--font-size-xl);
+    &.white {
+      color: var(--color-white);
+    }
+    &.black {
+      color: var(--color-black);
+    }
+  }
+}
+
+.command-form {
+    margin-top: 20px;
+  
+    form {
+      display: flex;
+      align-items: center;
+  
+      input[type='text'] {
+        padding: 6px 10px;
+        font-size: var(--font-size-l);
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        outline: none;
+        transition: border-color 0.2s ease-in-out;
+        width: 20rem;
+  
+        &::placeholder {
+          color: var(--color-light-black);
+        }
+  
+        &:focus {
+          border-color: #007bff;
+        }
+      }
+  
+      input[type='submit'] {
+        margin-left: 10px;
+        padding: 6px 12px;
+        font-size: 16px;
+        background-color: var(--color-primary-rotate);
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        outline: none;
+        transition: background-color 0.2s ease-in-out;
+  
+        &:hover {
+          background-color: var(--color-primary);
+        }
+      }
+    }
+  }

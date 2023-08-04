@@ -1,0 +1,9 @@
+
+<h1>Pawn Chess Simulator</h1>
+<%= turbo_stream_from @pawn %>
+
+<%= render partial: 'pawns/board', locals: { pawn: @pawn } %>
+
+
+
+<%= render partial: 'pawns/command_form', locals: { pawn: @pawn } %>
