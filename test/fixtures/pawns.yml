@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 200
+  x: 1
+  y: 1
+  face: EAST
+  color: WHITE
+
+two:
+  id: 201
+  x: 0
+  y: 0
+  face: NORTH
+  color: BLACK
