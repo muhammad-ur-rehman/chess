@@ -1,0 +1,598 @@
+Started GET "/" for ::1 at 2023-08-04 11:15:43 +0500
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/bunny/.rvm/gems/ruby-3.0.0/gems/railties-7.0.6/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/bunny/.rvm/gems/ruby-3.0.0/gems/railties-7.0.6/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.8ms | Allocations: 732)
+Completed 200 OK in 8ms (Views: 2.3ms | ActiveRecord: 0.0ms | Allocations: 7118)
+
+
+Started GET "/" for ::1 at 2023-08-04 11:41:04 +0500
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by PawnsController#chess_board as HTML
+  [1m[36mPawn Load (0.6ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/pawns_controller.rb:8:in `chess_board'
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.5ms | Allocations: 694)
+  Rendered pawns/_command_form.html.erb (Duration: 1.2ms | Allocations: 1481)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 3.8ms | Allocations: 3627)
+  Rendered layout layouts/application.html.erb (Duration: 169.9ms | Allocations: 84524)
+Completed 200 OK in 193ms (Views: 171.9ms | ActiveRecord: 7.1ms | Allocations: 111202)
+
+
+Started GET "/cable" for ::1 at 2023-08-04 11:41:05 +0500
+Started GET "/cable" [WebSocket] for ::1 at 2023-08-04 11:41:05 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi84NDE
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:41:13 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.7ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x0000000113e51668>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 10ms (ActiveRecord: 0.7ms | Allocations: 2579)
+
+
+Started GET "/" for ::1 at 2023-08-04 11:41:13 +0500
+Processing by PawnsController#chess_board as TURBO_STREAM
+  [1m[36mPawn Load (0.4ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/pawns_controller.rb:8:in `chess_board'
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.4ms | Allocations: 193)
+  Rendered pawns/_command_form.html.erb (Duration: 0.9ms | Allocations: 975)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 1.9ms | Allocations: 1425)
+  Rendered layout layouts/application.html.erb (Duration: 4.2ms | Allocations: 3050)
+Completed 200 OK in 8ms (Views: 4.8ms | ActiveRecord: 0.4ms | Allocations: 4306)
+
+
+Unsubscribing from channel: {"channel":"Turbo::StreamsChannel","signed_stream_name":"IloybGtPaTh2WTJobGMzTXRZbTloY21RdlVHRjNiaTg0TkRFIg==--a08daaf581ea021afbe15d35ff2fc62eb3666b648b43a4dce8b763ded1b03f3c"}
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi84NDE
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi84NDE
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:41:14 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x0000000113d39320>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.6ms | Allocations: 202)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 45.1ms | Allocations: 6340)
+Completed 500 Internal Server Error in 54ms (ActiveRecord: 0.3ms | Allocations: 8579)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `render_turbo_stream_flash_messages' for #<ActionView::Base:0x0000000000b748>):
+    1: 
+    2: <%= turbo_stream.replace @pawn, partial: 'pawns/board', locals: { pawn: @pawn } %>
+    3: <%= render_turbo_stream_flash_messages %>
+  
+app/views/pawns/process_command.turbo_stream.erb:3
+Unsubscribing from channel: {"channel":"Turbo::StreamsChannel","signed_stream_name":"IloybGtPaTh2WTJobGMzTXRZbTloY21RdlVHRjNiaTg0TkRFIg==--a08daaf581ea021afbe15d35ff2fc62eb3666b648b43a4dce8b763ded1b03f3c"}
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi84NDE
+Started GET "/" for ::1 at 2023-08-04 11:42:20 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/pawns_controller.rb:8:in `chess_board'
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.4ms | Allocations: 193)
+  Rendered pawns/_command_form.html.erb (Duration: 1.2ms | Allocations: 977)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 2.4ms | Allocations: 1377)
+  Rendered layout layouts/application.html.erb (Duration: 10.9ms | Allocations: 4223)
+Completed 200 OK in 15ms (Views: 11.5ms | ActiveRecord: 0.3ms | Allocations: 5449)
+
+
+Finished "/cable" [WebSocket] for ::1 at 2023-08-04 11:42:20 +0500
+Started GET "/cable" for ::1 at 2023-08-04 11:42:20 +0500
+Started GET "/cable" [WebSocket] for ::1 at 2023-08-04 11:42:20 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi84NDE
+Started GET "/" for ::1 at 2023-08-04 11:43:29 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mPawn Load (0.5ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/pawns_controller.rb:8:in `chess_board'
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.5ms | Allocations: 193)
+  Rendered pawns/_command_form.html.erb (Duration: 1.8ms | Allocations: 977)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 3.6ms | Allocations: 1377)
+  Rendered layout layouts/application.html.erb (Duration: 13.7ms | Allocations: 4867)
+Completed 200 OK in 19ms (Views: 14.5ms | ActiveRecord: 0.5ms | Allocations: 6104)
+
+
+Finished "/cable" [WebSocket] for ::1 at 2023-08-04 11:43:29 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi84NDE
+Started GET "/cable" for ::1 at 2023-08-04 11:43:29 +0500
+Started GET "/cable" [WebSocket] for ::1 at 2023-08-04 11:43:29 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi84NDE
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:43:31 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x00000001150b68d0>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.5ms | Allocations: 202)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 39.1ms | Allocations: 4415)
+Completed 500 Internal Server Error in 45ms (ActiveRecord: 0.2ms | Allocations: 5944)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `render_turbo_stream_flash_messages' for #<ActionView::Base:0x0000000000bb80>):
+    1: 
+    2: <%= turbo_stream.replace @pawn, partial: 'pawns/board', locals: { pawn: @pawn } %>
+    3: <%= render_turbo_stream_flash_messages %>
+  
+app/views/pawns/process_command.turbo_stream.erb:3
+Unsubscribing from channel: {"channel":"Turbo::StreamsChannel","signed_stream_name":"IloybGtPaTh2WTJobGMzTXRZbTloY21RdlVHRjNiaTg0TkRFIg==--a08daaf581ea021afbe15d35ff2fc62eb3666b648b43a4dce8b763ded1b03f3c"}
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi84NDE
+Started GET "/" for ::1 at 2023-08-04 11:44:50 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mPawn Load (0.1ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/pawns_controller.rb:8:in `chess_board'
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.2ms | Allocations: 215)
+  Rendered pawns/_command_form.html.erb (Duration: 0.4ms | Allocations: 969)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 0.9ms | Allocations: 1413)
+  Rendered layout layouts/application.html.erb (Duration: 2.5ms | Allocations: 3095)
+Completed 200 OK in 12ms (Views: 3.2ms | ActiveRecord: 4.8ms | Allocations: 7710)
+
+
+Started GET "/cable" for ::1 at 2023-08-04 11:44:50 +0500
+Started GET "/cable" [WebSocket] for ::1 at 2023-08-04 11:44:50 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi84NDE
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:44:51 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.4ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x0000000113a6c778>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 8ms (ActiveRecord: 0.4ms | Allocations: 2216)
+
+
+Started GET "/" for ::1 at 2023-08-04 11:44:51 +0500
+Processing by PawnsController#chess_board as TURBO_STREAM
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/pawns_controller.rb:8:in `chess_board'
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.4ms | Allocations: 193)
+  Rendered pawns/_command_form.html.erb (Duration: 0.9ms | Allocations: 974)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 1.7ms | Allocations: 1377)
+  Rendered layout layouts/application.html.erb (Duration: 3.9ms | Allocations: 3001)
+Completed 200 OK in 7ms (Views: 4.7ms | ActiveRecord: 0.2ms | Allocations: 4216)
+
+
+Unsubscribing from channel: {"channel":"Turbo::StreamsChannel","signed_stream_name":"IloybGtPaTh2WTJobGMzTXRZbTloY21RdlVHRjNiaTg0TkRFIg==--a08daaf581ea021afbe15d35ff2fc62eb3666b648b43a4dce8b763ded1b03f3c"}
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi84NDE
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi84NDE
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:44:53 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x0000000113364e08>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.5ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 1.4ms | Allocations: 215)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 3.2ms | Allocations: 789)
+Completed 200 OK in 8ms (Views: 3.9ms | ActiveRecord: 0.2ms | Allocations: 2443)
+
+
+Started GET "/" for ::1 at 2023-08-04 11:45:22 +0500
+Processing by PawnsController#chess_board as HTML
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/pawns_controller.rb:8:in `chess_board'
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 1.4ms | Allocations: 622)
+  Rendered pawns/_command_form.html.erb (Duration: 1.6ms | Allocations: 1212)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 5.3ms | Allocations: 2347)
+  Rendered layouts/_flash.html.erb (Duration: 0.5ms | Allocations: 210)
+  Rendered layout layouts/application.html.erb (Duration: 9.6ms | Allocations: 4613)
+Completed 200 OK in 18ms (Views: 12.5ms | ActiveRecord: 0.3ms | Allocations: 6592)
+
+
+Finished "/cable" [WebSocket] for ::1 at 2023-08-04 11:45:22 +0500
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi84NDE
+Started GET "/cable" for ::1 at 2023-08-04 11:45:22 +0500
+Started GET "/cable" [WebSocket] for ::1 at 2023-08-04 11:45:22 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi84NDE
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:45:23 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x000000011350f348>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 3ms (ActiveRecord: 0.2ms | Allocations: 1428)
+
+
+Started GET "/" for ::1 at 2023-08-04 11:45:23 +0500
+Processing by PawnsController#chess_board as TURBO_STREAM
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/pawns_controller.rb:8:in `chess_board'
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.4ms | Allocations: 193)
+  Rendered pawns/_command_form.html.erb (Duration: 0.7ms | Allocations: 974)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 1.5ms | Allocations: 1424)
+  Rendered layouts/_flash.html.erb (Duration: 0.1ms | Allocations: 24)
+  Rendered layout layouts/application.html.erb (Duration: 5.3ms | Allocations: 3125)
+Completed 200 OK in 9ms (Views: 5.8ms | ActiveRecord: 0.3ms | Allocations: 4390)
+
+
+Unsubscribing from channel: {"channel":"Turbo::StreamsChannel","signed_stream_name":"IloybGtPaTh2WTJobGMzTXRZbTloY21RdlVHRjNiaTg0TkRFIg==--a08daaf581ea021afbe15d35ff2fc62eb3666b648b43a4dce8b763ded1b03f3c"}
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi84NDE
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi84NDE
+Started GET "/" for ::1 at 2023-08-04 11:50:08 +0500
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by PawnsController#chess_board as HTML
+  [1m[36mPawn Load (0.5ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/pawns_controller.rb:8:in `chess_board'
+  Rendering layout layouts/application.html.erb
+  Rendering pawns/chess_board.html.erb within layouts/application
+  Rendered pawns/_board.html.erb (Duration: 0.5ms | Allocations: 694)
+  Rendered pawns/_command_form.html.erb (Duration: 1.0ms | Allocations: 1481)
+  Rendered pawns/chess_board.html.erb within layouts/application (Duration: 3.8ms | Allocations: 3627)
+  Rendered layouts/_flash.html.erb (Duration: 0.4ms | Allocations: 226)
+  Rendered layout layouts/application.html.erb (Duration: 29.6ms | Allocations: 28104)
+Completed 200 OK in 52ms (Views: 31.9ms | ActiveRecord: 6.4ms | Allocations: 54776)
+
+
+Started GET "/cable" for ::1 at 2023-08-04 11:50:09 +0500
+Started GET "/cable" [WebSocket] for ::1 at 2023-08-04 11:50:09 +0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vY2hlc3MtYm9hcmQvUGF3bi84NDE
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:50:12 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"PLACE 0,0,NORTH,WHITE", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.4ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x0000000117c58830>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"PLACE 0,0,NORTH,WHITE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mPawn Update (0.5ms)[0m  [1m[33mUPDATE "pawns" SET "y" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["y", 0], ["updated_at", "2023-08-04 06:50:12.719431"], ["id", 841]]
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.3ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 14)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 2.4ms | Allocations: 1111)
+Completed 200 OK in 13ms (Views: 3.4ms | ActiveRecord: 1.7ms | Allocations: 6435)
+
+
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:50:17 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x0000000121960010>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mPawn Update (0.6ms)[0m  [1m[33mUPDATE "pawns" SET "y" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["y", 1], ["updated_at", "2023-08-04 06:50:17.742166"], ["id", 841]]
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.4ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 14)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 0.9ms | Allocations: 521)
+Completed 200 OK in 12ms (Views: 1.4ms | ActiveRecord: 1.9ms | Allocations: 3601)
+
+
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:50:21 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"LEFT", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x0000000121a79dc0>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"LEFT", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mPawn Update (0.5ms)[0m  [1m[33mUPDATE "pawns" SET "face" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["face", "WEST"], ["updated_at", "2023-08-04 06:50:21.938379"], ["id", 841]]
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.5ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 0.1ms | Allocations: 14)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 1.3ms | Allocations: 521)
+Completed 200 OK in 13ms (Views: 2.2ms | ActiveRecord: 2.0ms | Allocations: 3585)
+
+
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:50:26 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x0000000127e0ac40>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mPawn Update (0.5ms)[0m  [1m[33mUPDATE "pawns" SET "y" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["y", 0], ["updated_at", "2023-08-04 06:50:26.686055"], ["id", 841]]
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.6ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 0.1ms | Allocations: 14)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 1.4ms | Allocations: 521)
+Completed 200 OK in 11ms (Views: 2.4ms | ActiveRecord: 1.6ms | Allocations: 3569)
+
+
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:50:27 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.4ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x0000000121e441f8>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.5ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 14)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 1.1ms | Allocations: 520)
+Completed 200 OK in 6ms (Views: 1.9ms | ActiveRecord: 0.4ms | Allocations: 2047)
+
+
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:50:33 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"RIGHT", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.4ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x0000000121ef4f58>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"RIGHT", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mPawn Update (1.0ms)[0m  [1m[33mUPDATE "pawns" SET "face" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["face", "NORTH"], ["updated_at", "2023-08-04 06:50:33.790080"], ["id", 841]]
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.7ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 0.1ms | Allocations: 14)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 1.9ms | Allocations: 520)
+Completed 200 OK in 15ms (Views: 3.1ms | ActiveRecord: 2.2ms | Allocations: 3588)
+
+
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:50:35 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"RIGHT", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x0000000127f23c30>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"RIGHT", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mPawn Update (0.5ms)[0m  [1m[33mUPDATE "pawns" SET "face" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["face", "SOUTH"], ["updated_at", "2023-08-04 06:50:35.041318"], ["id", 841]]
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.6ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 14)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 1.4ms | Allocations: 520)
+Completed 200 OK in 13ms (Views: 2.1ms | ActiveRecord: 1.7ms | Allocations: 3555)
+
+
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:50:36 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"RIGHT", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x0000000127fdf778>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"RIGHT", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mPawn Update (0.5ms)[0m  [1m[33mUPDATE "pawns" SET "face" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["face", "EAST"], ["updated_at", "2023-08-04 06:50:36.161238"], ["id", 841]]
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.6ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 0.1ms | Allocations: 14)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 1.3ms | Allocations: 520)
+Completed 200 OK in 12ms (Views: 2.2ms | ActiveRecord: 1.7ms | Allocations: 3561)
+
+
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:50:39 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x0000000117ff80f8>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mPawn Update (0.3ms)[0m  [1m[33mUPDATE "pawns" SET "x" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["x", 1], ["updated_at", "2023-08-04 06:50:39.719064"], ["id", 841]]
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.5ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 14)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 1.3ms | Allocations: 520)
+Completed 200 OK in 9ms (Views: 2.0ms | ActiveRecord: 1.2ms | Allocations: 3564)
+
+
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:50:40 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x00000001230162c8>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mPawn Update (0.6ms)[0m  [1m[33mUPDATE "pawns" SET "x" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["x", 2], ["updated_at", "2023-08-04 06:50:40.143781"], ["id", 841]]
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.5ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 14)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 1.0ms | Allocations: 520)
+Completed 200 OK in 11ms (Views: 1.7ms | ActiveRecord: 1.8ms | Allocations: 3574)
+
+
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:50:40 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x0000000122938a28>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mPawn Update (0.7ms)[0m  [1m[33mUPDATE "pawns" SET "x" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["x", 3], ["updated_at", "2023-08-04 06:50:40.310624"], ["id", 841]]
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.4ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 14)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 1.0ms | Allocations: 520)
+Completed 200 OK in 13ms (Views: 1.6ms | ActiveRecord: 1.6ms | Allocations: 3547)
+
+
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:50:40 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x00000001229a8260>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mPawn Update (0.5ms)[0m  [1m[33mUPDATE "pawns" SET "x" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["x", 4], ["updated_at", "2023-08-04 06:50:40.444013"], ["id", 841]]
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.6ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 14)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 1.2ms | Allocations: 520)
+Completed 200 OK in 14ms (Views: 2.1ms | ActiveRecord: 1.7ms | Allocations: 3567)
+
+
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:50:40 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x0000000122aab130>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mPawn Update (0.5ms)[0m  [1m[33mUPDATE "pawns" SET "x" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["x", 5], ["updated_at", "2023-08-04 06:50:40.591888"], ["id", 841]]
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.6ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 14)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 1.0ms | Allocations: 520)
+Completed 200 OK in 12ms (Views: 1.6ms | ActiveRecord: 1.7ms | Allocations: 3553)
+
+
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:50:44 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"LEFT", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x0000000122b23e50>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"LEFT", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mPawn Update (0.3ms)[0m  [1m[33mUPDATE "pawns" SET "face" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["face", "SOUTH"], ["updated_at", "2023-08-04 06:50:44.336921"], ["id", 841]]
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.5ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 0.1ms | Allocations: 14)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 1.1ms | Allocations: 520)
+Completed 200 OK in 9ms (Views: 1.7ms | ActiveRecord: 1.2ms | Allocations: 3559)
+
+
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:50:47 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x0000000122c52998>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mPawn Update (0.7ms)[0m  [1m[33mUPDATE "pawns" SET "x" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["x", 4], ["updated_at", "2023-08-04 06:50:47.791670"], ["id", 841]]
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.5ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 14)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 1.0ms | Allocations: 520)
+Completed 200 OK in 13ms (Views: 1.6ms | ActiveRecord: 1.9ms | Allocations: 3555)
+
+
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:50:47 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x000000012309e920>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mPawn Update (0.4ms)[0m  [1m[33mUPDATE "pawns" SET "x" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["x", 3], ["updated_at", "2023-08-04 06:50:47.922127"], ["id", 841]]
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.5ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 0.1ms | Allocations: 14)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 1.5ms | Allocations: 520)
+Completed 200 OK in 12ms (Views: 2.5ms | ActiveRecord: 1.5ms | Allocations: 3567)
+
+
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:50:48 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.2ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x00000001230fd6c8>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mPawn Update (0.5ms)[0m  [1m[33mUPDATE "pawns" SET "x" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["x", 2], ["updated_at", "2023-08-04 06:50:48.054235"], ["id", 841]]
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.6ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 0.1ms | Allocations: 14)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 1.2ms | Allocations: 520)
+Completed 200 OK in 11ms (Views: 2.3ms | ActiveRecord: 1.6ms | Allocations: 3561)
+
+
+Started PATCH "/chess/board/841/process-command" for ::1 at 2023-08-04 11:50:48 +0500
+Processing by PawnsController#process_command as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "id"=>"841"}
+  [1m[36mPawn Load (0.3ms)[0m  [1m[34mSELECT "pawns".* FROM "pawns" WHERE "pawns"."id" = $1 LIMIT $2[0m  [["id", 841], ["LIMIT", 1]]
+  ↳ app/controllers/concerns/chess_actions.rb:15:in `find_pawn'
+[31mUnpermitted parameters: :_method, :authenticity_token, :commit, :id. Context: { controller: PawnsController, action: process_command, request: #<ActionDispatch::Request:0x00000001231f1f20>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "command"=>"MOVE", "commit"=>"Submit", "controller"=>"pawns", "action"=>"process_command", "id"=>"841"} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mPawn Update (0.6ms)[0m  [1m[33mUPDATE "pawns" SET "x" = $1, "updated_at" = $2 WHERE "pawns"."id" = $3[0m  [["x", 1], ["updated_at", "2023-08-04 06:50:48.206662"], ["id", 841]]
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/pawns_controller.rb:19:in `process_command'
+  Rendering pawns/process_command.turbo_stream.erb
+  Rendered pawns/_board.html.erb (Duration: 0.4ms | Allocations: 202)
+  Rendered layouts/_flash.html.erb (Duration: 0.0ms | Allocations: 14)
+  Rendered pawns/process_command.turbo_stream.erb (Duration: 1.2ms | Allocations: 520)
+Completed 200 OK in 13ms (Views: 2.0ms | ActiveRecord: 1.6ms | Allocations: 3565)
+
+

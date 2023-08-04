@@ -1,0 +1,44 @@
+// app/assets/stylesheets/components/_flash.scss
+
+.flash {
+    position:fixed;
+    top: 5rem;
+    left: 50%;
+    transform: translateX(-50%);
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-s);
+  
+    max-width: 100%;
+    width: max-content;
+    padding: 0 var(--space-m);
+  
+    &__message {
+      font-size: var(--font-size-m);
+      color: var(--color-white);
+      padding: var(--space-xs) var(--space-m);
+      background-color: var(--color-dark);
+      animation: appear-then-fade 4s both;
+      border-radius: 999px;
+    }
+
+    &__error {
+      font-size: var(--font-size-m);
+      color: var(--color-black);
+      padding: var(--space-xs) var(--space-m);
+      background-color: var(--color-primary);
+      animation: appear-then-fade 4s both;
+      border-radius: 999px;
+    }
+
+    &__notice {
+      font-size: var(--font-size-m);
+      color: var(--color-black);
+      padding: var(--space-xs) var(--space-m);
+      background-color: var(--color-secondary-rotate);
+      animation: appear-then-fade 8s both;
+      border-radius: 999px;
+    }
+}

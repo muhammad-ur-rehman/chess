@@ -1,1 +1,7 @@
 // Entry point for your Sass build
+@import 'components/board';
+@import 'components/error_message';
+@import 'components/flash';
+
+@import 'config/animations';
+@import 'config/variables';

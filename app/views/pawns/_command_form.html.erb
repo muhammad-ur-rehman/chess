@@ -1,0 +1,6 @@
+<div class="command-form">
+  <%= form_with(url: process_command_path(@pawn), method: :patch) do |f| %>
+    <%= f.text_field :command, placeholder: 'Enter command to process' %>
+    <%= f.submit 'Submit' %>
+  <% end %>
+</div>

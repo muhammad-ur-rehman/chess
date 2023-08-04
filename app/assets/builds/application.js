@@ -6800,7 +6800,15 @@
     }
   };
 
+  // app/javascript/controllers/removals_controller.js
+  var removals_controller_default = class extends Controller {
+    remove() {
+      this.element.remove();
+    }
+  };
+
   // app/javascript/controllers/index.js
   application.register("hello", hello_controller_default);
+  application.register("removals", removals_controller_default);
 })();
 //# sourceMappingURL=/assets/application.js.map

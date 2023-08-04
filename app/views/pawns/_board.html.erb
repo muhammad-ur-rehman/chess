@@ -1,0 +1,24 @@
+<%= turbo_frame_tag @pawn do %>
+  <div class="chess-board">
+    <% (0..7).each do |y| %>
+      <% (0..7).each do |x| %>
+        <div class="cell <%= (x == @pawn.x && y == @pawn.y) ? 'pawn' : 'empty' %>">
+          <% if x == @pawn.x && y == @pawn.y %>
+        
+            <span class="pawn-face"><%= "#{@pawn.face[0]} #{@pawn.color[0]}" %></span>
+            <% case @pawn.face %>
+              <% when 'NORTH' %>
+                <span class="arrow">↓</span>
+              <% when 'SOUTH' %>
+                <span class="arrow">←</span>
+              <% when 'EAST' %>
+                <span class="arrow">→</span>
+              <% when 'WEST' %>
+                <span class="arrow">↑</span>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
